@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TestableAndroidAppsDroidCon15</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="share">Share</string>
+    <string name="error_loading_data">Error loading data</string>
+    <string name="reload">Reload</string>
+    <string name="loading">Loading...</string>
+    <string name="title">Title</string>
+    <string name="text">Text</string>
+    <string name="mandatory_field">Mandatory field</string>
+</resources>

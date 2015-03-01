@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="it.cosenonjaviste.testableandroidapps">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:name=".v7.CnjApplication">
+
+        <activity android:name=".v1.PostListActivity">
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            -->
+        </activity>
+
+        <activity android:name=".v1.ShareActivity"/>
+
+
+        <activity android:name=".v2.PostListActivity">
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            -->
+        </activity>
+
+        <activity android:name=".v2.ShareActivity"/>
+        <activity android:name=".v2.TestablePostListActivity"/>
+        <activity android:name=".v2.TestablePostListActivityWithError"/>
+        <activity android:name=".v2.TestableShareActivity"/>
+
+        <activity android:name=".v7.PostListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".v7.ShareActivity"/>
+
+    </application>
+
+</manifest>

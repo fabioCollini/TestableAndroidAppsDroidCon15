@@ -1,0 +1,122 @@
+{  
+    "status":"ok",
+    "count":10,
+    "count_total":197,
+    "pages":20,
+    "posts":[  
+        {  
+            "id":12046,
+            "type":"post",
+            "slug":"gwt-create-la-conferenza-internazionale-su-gwt",
+            "url":"http:\/\/www.cosenonjaviste.it\/gwt-create-la-conferenza-internazionale-su-gwt\/",
+            "status":"publish",
+            "title":"GWT.create la conferenza internazionale su GWT",
+            "excerpt":"<p>GWT.create la conferenza internazionale su GWT Prima nel bel mezzo della Silicon Valley, al Computer History Museum di Mountain View \u00a0il 22 e 23 Gennaio, e subito dopo presso lo Hilton Hotel a Monaco di Baviera il 27 ed il 28 Gennaio, si e\u2019 tenuta la conferenza annuale della community GWT: la GWT.create. Due location molto lontane ma utili a [&hellip;]<\/p>\n",
+            "date":"2015-02-05 09:00:27",
+            "modified":"2015-02-05 09:25:53",
+            "categories":[  
+                {  
+                    "id":95,
+                    "slug":"eventi",
+                    "title":"Eventi",
+                    "description":"",
+                    "parent":0,
+                    "post_count":28
+                },
+                {  
+                    "id":751,
+                    "slug":"innovazione-eventi",
+                    "title":"Innovazione",
+                    "description":"",
+                    "parent":95,
+                    "post_count":2
+                },
+                {  
+                    "id":6,
+                    "slug":"java",
+                    "title":"Java",
+                    "description":"",
+                    "parent":0,
+                    "post_count":62
+                },
+                {  
+                    "id":750,
+                    "slug":"tecnologia-eventi",
+                    "title":"Tecnologia",
+                    "description":"",
+                    "parent":95,
+                    "post_count":2
+                },
+                {  
+                    "id":418,
+                    "slug":"tutorial-2",
+                    "title":"Tutorial",
+                    "description":"",
+                    "parent":0,
+                    "post_count":46
+                }
+            ],
+            "author":{  
+                "id":33,
+                "slug":"author1",
+                "name":"author1",
+                "first_name":"author1",
+                "last_name":"author1",
+                "nickname":"author1",
+                "url":"http:\/\/www.cosenonjaviste.it\/?team=author1",
+                "description":"bla bla bla.",
+                "email":"author1@gmail.com"
+            },
+            "comments":[  
+
+            ],
+            "comment_count":0,
+            "comment_status":"open"
+        },
+        {  
+            "id":11974,
+            "type":"post",
+            "slug":"alfresco-inboundsmtp-come-inviare-e-mail-ad-alfresco",
+            "url":"http:\/\/www.cosenonjaviste.it\/alfresco-inboundsmtp-come-inviare-e-mail-ad-alfresco\/",
+            "status":"publish",
+            "title":"Alfresco InboundSMTP: come inviare e-mail ad Alfresco",
+            "excerpt":"<p>In questi giorni mi sono trovato alle prese con l&#8217;abilitare il server &#8220;inbound&#8221; SMTP di Alfresco per potergli inviare mail da poter archiviare come documenti, insieme agli allegati. Fin qui niente di nuovo, l&#8217;abilitazione \u00e8 ben documentata, ma come fare ad inviare mail ad Alfresco per esempio dal proprio indirizzo gmail? Bisogna che l&#8217;smtp di Google veda quello di Alfresco: [&hellip;]<\/p>\n",
+            "date":"2015-01-29 09:53:48",
+            "modified":"2015-01-29 00:04:12",
+            "categories":[  
+                {  
+                    "id":595,
+                    "slug":"alfresco-2",
+                    "title":"Alfresco",
+                    "description":"",
+                    "parent":0,
+                    "post_count":5
+                },
+                {  
+                    "id":418,
+                    "slug":"tutorial-2",
+                    "title":"Tutorial",
+                    "description":"",
+                    "parent":0,
+                    "post_count":46
+                }
+            ],
+            "author":{  
+                "id":3,
+                "slug":"author-2",
+                "name":"author 2",
+                "first_name":"author",
+                "last_name":"2",
+                "nickname":"author.2",
+                "url":"http:\/\/www.cosenonjaviste.it\/?team=author-2",
+                "description":"bla bla bla",
+                "email":"author.2@gmail.com"
+            },
+            "comments":[  
+
+            ],
+            "comment_count":0,
+            "comment_status":"open"
+        }
+    ]
+}

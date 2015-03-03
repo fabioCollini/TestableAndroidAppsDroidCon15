@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v4;
+package it.cosenonjaviste.testableandroidapps.v5;
 
 import javax.inject.Singleton;
 

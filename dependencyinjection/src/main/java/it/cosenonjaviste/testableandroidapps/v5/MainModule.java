@@ -1,6 +1,9 @@
-package it.cosenonjaviste.testableandroidapps.v4;
+package it.cosenonjaviste.testableandroidapps.v5;
 
 import com.google.gson.GsonBuilder;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
 
@@ -18,5 +21,9 @@ public class MainModule {
                 .setConverter(new GsonConverter(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()))
                 .build();
         return restAdapter.create(WordPressService.class);
+    }
+
+    @Provides @Singleton Executor provideExecutor() {
+        return Executors.newFixedThreadPool(5);
     }
 }

@@ -1,34 +1,36 @@
-package it.cosenonjaviste.testableandroidapps.v3;
+package it.cosenonjaviste.testableandroidapps.v4;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.Button;
 import android.widget.EditText;
+
+import org.parceler.Parcels;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
+import butterknife.OnFocusChange;
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.ShareExecutor;
 
 
 public class ShareActivity extends ActionBarActivity {
 
+    public static final String MODEL = "model";
     @InjectView(R.id.share_title) EditText titleEditText;
 
     @InjectView(R.id.share_body) EditText bodyEditText;
-
-    @InjectView(R.id.share_button) Button shareButton;
 
     @Inject ShareExecutor shareExecutor;
 
     private static final String TITLE = "title";
     private static final String BODY = "body";
+
+    private ShareModel model;
 
     public static void createAndStart(Context context, String title, String body) {
         Intent intent = new Intent(context, ShareActivity.class);
@@ -50,19 +52,37 @@ public class ShareActivity extends ActionBarActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.inject(this);
 
-        String title = getIntent().getStringExtra(TITLE);
-        String body = getIntent().getStringExtra(BODY);
+        if (savedInstanceState != null) {
+            model = Parcels.unwrap(savedInstanceState.getParcelable(MODEL));
+        } else {
+            model = new ShareModel();
+            model.setTitle(getIntent().getStringExtra(TITLE));
+            model.setBody(getIntent().getStringExtra(BODY));
+        }
 
-        titleEditText.setText(title);
-        bodyEditText.setText(body);
+        updateUi();
     }
 
-    @OnTextChanged({R.id.share_title, R.id.share_body}) void validateFields() {
-        String title = titleEditText.getText().toString();
-        titleEditText.setError(title.isEmpty() ? getString(R.string.mandatory_field) : null);
+    private void updateModel() {
+        model.setTitle(titleEditText.getText().toString());
+        model.setBody(bodyEditText.getText().toString());
+    }
 
-        String body = bodyEditText.getText().toString();
-        bodyEditText.setError(body.isEmpty() ? getString(R.string.mandatory_field) : null);
+    private void updateUi() {
+        titleEditText.setText(model.getTitle());
+        bodyEditText.setText(model.getBody());
+    }
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        updateModel();
+        outState.putParcelable(MODEL, Parcels.wrap(model));
+    }
+
+    @OnFocusChange({R.id.share_title, R.id.share_body}) void validateFields() {
+        updateModel();
+        titleEditText.setError(model.getTitle().isEmpty() ? getString(R.string.mandatory_field) : null);
+        bodyEditText.setError(model.getBody().isEmpty() ? getString(R.string.mandatory_field) : null);
     }
 
     @OnClick(R.id.share_button) void share() {

@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v3;
+package it.cosenonjaviste.testableandroidapps;
 
 public interface ShareExecutor {
     void startSendActivity(String title, String body);

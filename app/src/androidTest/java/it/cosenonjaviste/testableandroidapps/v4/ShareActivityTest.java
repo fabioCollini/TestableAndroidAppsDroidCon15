@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v3;
+package it.cosenonjaviste.testableandroidapps.v4;
 
 import android.content.Intent;
 import android.support.test.espresso.action.ViewActions;

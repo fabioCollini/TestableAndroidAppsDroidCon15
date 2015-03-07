@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v3;
+package it.cosenonjaviste.testableandroidapps.v4;
 
 import org.junit.Rule;
 import org.junit.Test;

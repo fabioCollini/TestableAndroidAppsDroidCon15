@@ -1,9 +1,7 @@
-package it.cosenonjaviste.testableandroidapps.v3;
+package it.cosenonjaviste.testableandroidapps;
 
 import android.content.Context;
 import android.content.Intent;
-
-import it.cosenonjaviste.testableandroidapps.R;
 
 public class AndroidShareExecutor implements ShareExecutor {
 

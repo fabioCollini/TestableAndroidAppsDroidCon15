@@ -28,6 +28,11 @@ public class PostAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setItems(List<Post> items) {
+        this.items = items;
+        notifyDataSetChanged();
+    }
+
     @Override public int getCount() {
         return items.size();
     }

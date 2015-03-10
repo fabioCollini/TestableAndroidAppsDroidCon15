@@ -17,7 +17,6 @@ public class Post {
     }
 
     public Post(long id, Author author, String title, Date date, String url, String excerpt) {
-        this();
         this.id = id;
         this.author = author;
         this.title = title;

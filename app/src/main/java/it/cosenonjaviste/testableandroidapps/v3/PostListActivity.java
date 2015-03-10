@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import it.cosenonjaviste.testableandroidapps.ObservableHolder;
 import it.cosenonjaviste.testableandroidapps.PostAdapter;
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.RetainedObservableFragment;
@@ -38,7 +39,7 @@ public class PostListActivity extends ActionBarActivity {
 
     @InjectView(R.id.error_layout) View errorLayout;
 
-    private RetainedObservableFragment<List<Post>> retainedFragment;
+    private RetainedObservableFragment<ObservableHolder<List<Post>>> retainedFragment;
 
     private Subscription subscription;
 
@@ -61,6 +62,10 @@ public class PostListActivity extends ActionBarActivity {
         listView.setOnItemClickListener((parent, view, position, id) -> startShareActivity(position));
 
         retainedFragment = RetainedObservableFragment.getOrCreate(this, "retained");
+        if (retainedFragment.get() == null) {
+            retainedFragment.init(new ObservableHolder<>(), ObservableHolder::destroy);
+        }
+
 
         if (savedInstanceState != null) {
             restoreUi(savedInstanceState);
@@ -87,7 +92,7 @@ public class PostListActivity extends ActionBarActivity {
         errorLayout.setVisibility(View.GONE);
         listView.setVisibility(View.GONE);
         Observable<List<Post>> observable = createListObservable();
-        retainedFragment.bind(observable.replay());
+        retainedFragment.get().bind(observable.replay());
     }
 
     protected Observable<List<Post>> createListObservable() {
@@ -102,7 +107,7 @@ public class PostListActivity extends ActionBarActivity {
         List<Post> savedList = Parcels.unwrap(savedInstanceState.getParcelable(ITEMS));
         if (savedList != null) {
             adapter.addItems(savedList);
-        } else if (retainedFragment.isRunning()) {
+        } else if (retainedFragment.get().isRunning()) {
             progressLayout.setVisibility(View.VISIBLE);
             errorLayout.setVisibility(View.GONE);
             listView.setVisibility(View.GONE);
@@ -120,9 +125,9 @@ public class PostListActivity extends ActionBarActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        subscription = retainedFragment.get().subscribe(l -> {
+        subscription = retainedFragment.get().getObservable().subscribe(l -> {
             adapter.addItems(l);
-            retainedFragment.clear();
+            retainedFragment.get().clear();
             progressLayout.setVisibility(View.GONE);
             errorLayout.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);

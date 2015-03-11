@@ -67,8 +67,8 @@ dependencies {
     apt 'org.parceler:parceler:0.2.15'
 
     androidTestApt 'com.google.dagger:dagger-compiler:2.0-SNAPSHOT'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
-    androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.0') {
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+    androidTestCompile('com.google.dexmaker:dexmaker-mockito:1.2') {
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
     androidTestCompile 'com.squareup.spoon:spoon-client:1.0.5'

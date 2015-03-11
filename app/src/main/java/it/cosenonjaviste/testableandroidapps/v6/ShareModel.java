@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v5;
+package it.cosenonjaviste.testableandroidapps.v6;
 
 import org.parceler.Parcel;
 
@@ -11,6 +11,14 @@ public class ShareModel {
     int titleError;
 
     int bodyError;
+
+    public ShareModel() {
+    }
+
+    public ShareModel(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
 
     public String getTitle() {
         return title;

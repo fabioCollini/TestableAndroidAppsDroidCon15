@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 @Parcel
-public class Author implements Comparable<Author> {
+public class Author {
     long id;
 
     @SerializedName("first_name")
@@ -40,9 +40,5 @@ public class Author implements Comparable<Author> {
 
     public String getLastName() {
         return lastName;
-    }
-
-    @Override public int compareTo(Author o) {
-        return Long.compare(id, o.id);
     }
 }

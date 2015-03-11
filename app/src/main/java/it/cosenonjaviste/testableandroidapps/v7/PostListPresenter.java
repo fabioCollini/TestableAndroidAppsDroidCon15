@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v6;
+package it.cosenonjaviste.testableandroidapps.v7;
 
 import java.text.MessageFormat;
 import java.util.List;

@@ -9,7 +9,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name=".v6.CnjApplication">
+        android:name=".v7.CnjApplication">
 
         <activity android:name=".v1.PostListActivity">
             <!--
@@ -72,6 +72,16 @@
         <activity android:name=".v5.ShareActivity"/>
 
         <activity android:name=".v6.PostListActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name=".v6.ShareActivity"/>
+
+        <activity android:name=".v7.PostListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -79,7 +89,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".v6.ShareActivity"/>
+        <activity android:name=".v7.ShareActivity"/>
 
     </application>
 

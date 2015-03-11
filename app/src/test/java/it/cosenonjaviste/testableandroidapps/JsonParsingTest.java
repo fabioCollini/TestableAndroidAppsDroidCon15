@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v2;
+package it.cosenonjaviste.testableandroidapps;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

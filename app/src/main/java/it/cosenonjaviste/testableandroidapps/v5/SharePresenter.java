@@ -11,9 +11,10 @@ public class SharePresenter {
 
     private ShareModel model;
 
-    @Inject ShareExecutor shareExecutor;
+    private ShareExecutor shareExecutor;
 
-    @Inject public SharePresenter() {
+    @Inject public SharePresenter(ShareExecutor shareExecutor) {
+        this.shareExecutor = shareExecutor;
     }
 
     public void init(ShareActivity view, ShareModel model) {

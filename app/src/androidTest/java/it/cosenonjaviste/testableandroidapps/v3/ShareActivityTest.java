@@ -10,6 +10,7 @@ import org.junit.rules.TestRule;
 
 import javax.inject.Inject;
 
+import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.ShareExecutor;
 import it.cosenonjaviste.testableandroidapps.utils.ActivityRule;

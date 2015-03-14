@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.Date;
 
+import it.cosenonjaviste.testableandroidapps.SchedulerManager;
 import it.cosenonjaviste.testableandroidapps.model.Author;
 import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
@@ -35,7 +36,8 @@ public class PostListPresenterTest {
 
     @Before
     public void setUp() throws Exception {
-        postListPresenter = new PostListPresenter(wordPressService, Schedulers.immediate(), Schedulers.immediate());
+        SchedulerManager schedulerManager = new SchedulerManager(Schedulers.immediate(), Schedulers.immediate());
+        postListPresenter = new PostListPresenter(wordPressService, schedulerManager);
     }
 
     @Test

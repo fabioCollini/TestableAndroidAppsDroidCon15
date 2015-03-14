@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import it.cosenonjaviste.testableandroidapps.SchedulerManager;
 import it.cosenonjaviste.testableandroidapps.ShareExecutor;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 import it.cosenonjaviste.testableandroidapps.v6.*;
@@ -22,7 +23,7 @@ public class TestModule {
         return Mockito.mock(WordPressService.class);
     }
 
-    @Provides PostListPresenter providesPresenter(WordPressService wordPressService) {
-        return new PostListPresenter(wordPressService, Schedulers.io(), AndroidSchedulers.mainThread());
+    @Provides @Singleton SchedulerManager providesSchedulerManager() {
+        return new SchedulerManager(Schedulers.io(), AndroidSchedulers.mainThread());
     }
 }

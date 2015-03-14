@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v4;
+package it.cosenonjaviste.testableandroidapps;
 
 import android.app.Application;
 
@@ -8,12 +8,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import it.cosenonjaviste.testableandroidapps.AndroidShareExecutor;
-import it.cosenonjaviste.testableandroidapps.BuildConfig;
-import it.cosenonjaviste.testableandroidapps.ShareExecutor;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 @Module
 public class ApplicationModule {
@@ -36,5 +35,9 @@ public class ApplicationModule {
             restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
         }
         return restAdapter.create(WordPressService.class);
+    }
+
+    @Provides @Singleton SchedulerManager providesSchedulerManager() {
+        return new SchedulerManager(Schedulers.io(), AndroidSchedulers.mainThread());
     }
 }

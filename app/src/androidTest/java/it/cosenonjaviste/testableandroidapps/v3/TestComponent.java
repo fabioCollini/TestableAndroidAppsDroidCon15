@@ -3,6 +3,7 @@ package it.cosenonjaviste.testableandroidapps.v3;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import it.cosenonjaviste.testableandroidapps.ApplicationComponent;
 
 @Singleton
 @Component(modules = TestModule.class)

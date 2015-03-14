@@ -3,8 +3,11 @@ package it.cosenonjaviste.testableandroidapps.v8;
 import java.text.MessageFormat;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import it.cosenonjaviste.testableandroidapps.ObservableHolder;
 import it.cosenonjaviste.testableandroidapps.R;
+import it.cosenonjaviste.testableandroidapps.SchedulerManager;
 import it.cosenonjaviste.testableandroidapps.lib.AndrularMvpContext;
 import it.cosenonjaviste.testableandroidapps.lib.Bind;
 import it.cosenonjaviste.testableandroidapps.lib.BindField;
@@ -16,25 +19,23 @@ import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscription;
 
 public class PostListPresenter implements Presenter<PostListModel, PostListActivity> {
 
     private final WordPressService wordPressService;
 
+    private SchedulerManager schedulerManager;
+
     private ObservableHolder<List<Post>> observableHolder = new ObservableHolder<>();
 
     private Subscription subscription;
 
     private AndrularMvpContext<PostListModel, PostListActivity> andrularContext;
-    private Scheduler ioScheduler;
-    private Scheduler mainThreadscheduler;
 
-    public PostListPresenter(WordPressService wordPressService, Scheduler ioScheduler, Scheduler mainThreadscheduler) {
+    @Inject public PostListPresenter(WordPressService wordPressService, SchedulerManager schedulerManager) {
         this.wordPressService = wordPressService;
-        this.ioScheduler = ioScheduler;
-        this.mainThreadscheduler = mainThreadscheduler;
+        this.schedulerManager = schedulerManager;
     }
 
     public void resume(AndrularMvpContext<PostListModel, PostListActivity> andrularContext) {
@@ -72,8 +73,7 @@ public class PostListPresenter implements Presenter<PostListModel, PostListActiv
         return wordPressService
                 .listPosts()
                 .map(PostResponse::getPosts)
-                .subscribeOn(ioScheduler)
-                .observeOn(mainThreadscheduler);
+                .compose(schedulerManager.schedule());
     }
 
     @OnItemClick(R.id.list)

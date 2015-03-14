@@ -3,6 +3,8 @@ package it.cosenonjaviste.testableandroidapps.v8;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import it.cosenonjaviste.testableandroidapps.ApplicationComponent;
+import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 import it.cosenonjaviste.testableandroidapps.lib.AndrularMvpContext;

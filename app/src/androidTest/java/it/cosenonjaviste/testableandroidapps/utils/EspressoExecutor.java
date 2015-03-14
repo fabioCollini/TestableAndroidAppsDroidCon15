@@ -1,5 +1,6 @@
 package it.cosenonjaviste.testableandroidapps.utils;
 
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
 
 import java.util.concurrent.BlockingQueue;
@@ -18,11 +19,12 @@ public class EspressoExecutor extends ThreadPoolExecutor implements IdlingResour
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
     }
 
-    public static EspressoExecutor newCachedThreadPool() {
+    public static EspressoExecutor getCachedThreadPool() {
         if (singleton == null) {
             singleton = new EspressoExecutor(0, Integer.MAX_VALUE,
                     60L, TimeUnit.SECONDS,
                     new SynchronousQueue<Runnable>());
+            Espresso.registerIdlingResources(singleton);
         }
         return singleton;
     }

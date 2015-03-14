@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v7;
+package it.cosenonjaviste.testableandroidapps;
 
 import org.mockito.Mockito;
 
@@ -6,9 +6,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import it.cosenonjaviste.testableandroidapps.SchedulerManager;
-import it.cosenonjaviste.testableandroidapps.ShareExecutor;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
+import it.cosenonjaviste.testableandroidapps.utils.EspressoExecutor;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -23,6 +22,6 @@ public class TestModule {
     }
 
     @Provides @Singleton SchedulerManager providesSchedulerManager() {
-        return new SchedulerManager(Schedulers.io(), AndroidSchedulers.mainThread());
+        return new SchedulerManager(Schedulers.from(EspressoExecutor.getCachedThreadPool()), AndroidSchedulers.mainThread());
     }
 }

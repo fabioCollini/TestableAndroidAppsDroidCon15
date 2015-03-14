@@ -6,10 +6,6 @@ import android.os.Bundle;
 import org.parceler.Parcels;
 
 import it.cosenonjaviste.testableandroidapps.RetainedFragment;
-import it.cosenonjaviste.testableandroidapps.v8.PostListActivity;
-import it.cosenonjaviste.testableandroidapps.v8.PostListComponent;
-import it.cosenonjaviste.testableandroidapps.v8.PostListModel;
-import it.cosenonjaviste.testableandroidapps.v8.PostListPresenter;
 
 public class AndrularMvpContext<M, V> {
 
@@ -17,29 +13,29 @@ public class AndrularMvpContext<M, V> {
 
     protected BaseContext context;
 
-    private PostListModel model;
+    private M model;
 
     private V view;
 
-    private PostListPresenter presenter;
+    private Presenter<M, V> presenter;
 
-    public AndrularMvpContext(Activity view, Bundle state, RetainedFragment<PostListComponent> retainedFragment) {
+    public AndrularMvpContext(V view, Bundle state, RetainedFragment<MvpFactory<Presenter<M, V>>> retainedFragment) {
+        this.presenter = retainedFragment.get().createPresenter();
+
         if (state != null) {
             model = Parcels.unwrap(state.getParcelable(MODEL));
         } else {
-            model = new PostListModel();
+            model = presenter.createDefaultModel();
         }
-
-        this.presenter = retainedFragment.get().createPresenter();
 
         retainedFragment.setOnDestroy(c -> destroy());
 
-        this.view = (V) view;
+        this.view = view;
         context = createAndrularContext(view, model, presenter);
     }
 
-    protected BaseContext createAndrularContext(Activity view, PostListModel model, PostListPresenter presenter) {
-        return new AndrularContext(view, model, presenter);
+    protected BaseContext createAndrularContext(V view, M model, Presenter presenter) {
+        return new AndrularContext((Activity) view, model, presenter);
     }
 
     public void resume() {
@@ -62,11 +58,11 @@ public class AndrularMvpContext<M, V> {
         context.updateView();
     }
 
-    public PostListModel getModel() {
+    public M getModel() {
         return model;
     }
 
-    public PostListActivity getView() {
-        return (PostListActivity) view;
+    public V getView() {
+        return view;
     }
 }

@@ -10,7 +10,7 @@ import it.cosenonjaviste.testableandroidapps.lib.AndrularMvpContext;
 
 public class PostListActivity extends ActionBarActivity {
 
-    private AndrularMvpContext andrularContext;
+    private AndrularMvpContext<PostListModel, PostListActivity> andrularContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,10 +18,13 @@ public class PostListActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        andrularContext = new AndrularMvpContext(this, savedInstanceState != null ? savedInstanceState : getIntent().getExtras(), RetainedFragment.getOrCreate(getSupportFragmentManager(), "retained", () -> {
-            ApplicationComponent appComponent = ((CnjApplication) getApplicationContext()).getComponent();
-            return Dagger_PostListComponent.builder().applicationComponent(appComponent).build();
-        }));
+        andrularContext = new AndrularMvpContext<>(this,
+                savedInstanceState != null ? savedInstanceState : getIntent().getExtras(),
+                RetainedFragment.getOrCreate(getSupportFragmentManager(), "retained", () -> {
+                    ApplicationComponent appComponent = ((CnjApplication) getApplicationContext()).getComponent();
+                    return Dagger_PostListComponent.builder().applicationComponent(appComponent).build();
+                })
+        );
     }
 
 //    @OnItemClick(R.id.list) void onItemClick(int position) {

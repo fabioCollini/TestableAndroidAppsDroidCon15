@@ -1,22 +1,17 @@
 package it.cosenonjaviste.testableandroidapps.lib;
 
-import android.app.Activity;
-
 import it.cosenonjaviste.testableandroidapps.RetainedFragment;
-import it.cosenonjaviste.testableandroidapps.v8.PostListComponent;
-import it.cosenonjaviste.testableandroidapps.v8.PostListModel;
-import it.cosenonjaviste.testableandroidapps.v8.PostListPresenter;
 
-public class AndrularMvpTestContext extends AndrularMvpContext {
-    public AndrularMvpTestContext(Activity view, PostListPresenter presenter) {
-        super(view, null, RetainedFragment.create(new PostListComponent() {
-            @Override public PostListPresenter createPresenter() {
+public class AndrularMvpTestContext<M, V> extends AndrularMvpContext<M, V> {
+    public AndrularMvpTestContext(V view, Presenter<M, V> presenter) {
+        super(view, null, RetainedFragment.create(new MvpFactory<Presenter<M, V>>() {
+            @Override public Presenter<M, V> createPresenter() {
                 return presenter;
             }
         }));
     }
 
-    @Override protected BaseContext createAndrularContext(Activity view, PostListModel model, PostListPresenter presenter) {
+    @Override protected BaseContext createAndrularContext(Object view, Object model, Presenter presenter) {
         return new AndrularTestContext(model, presenter);
     }
 

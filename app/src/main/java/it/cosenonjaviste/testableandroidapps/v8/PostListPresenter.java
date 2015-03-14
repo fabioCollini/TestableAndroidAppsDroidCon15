@@ -9,6 +9,7 @@ import it.cosenonjaviste.testableandroidapps.lib.AndrularMvpContext;
 import it.cosenonjaviste.testableandroidapps.lib.Bind;
 import it.cosenonjaviste.testableandroidapps.lib.BindField;
 import it.cosenonjaviste.testableandroidapps.lib.OnClick;
+import it.cosenonjaviste.testableandroidapps.lib.Presenter;
 import it.cosenonjaviste.testableandroidapps.model.Author;
 import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
@@ -17,7 +18,7 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.Subscription;
 
-public class PostListPresenter {
+public class PostListPresenter implements Presenter<PostListModel, PostListActivity> {
 
     private final WordPressService wordPressService;
 
@@ -25,7 +26,7 @@ public class PostListPresenter {
 
     private Subscription subscription;
 
-    private AndrularMvpContext andrularContext;
+    private AndrularMvpContext<PostListModel, PostListActivity> andrularContext;
     private Scheduler ioScheduler;
     private Scheduler mainThreadscheduler;
 
@@ -35,7 +36,7 @@ public class PostListPresenter {
         this.mainThreadscheduler = mainThreadscheduler;
     }
 
-    public void resume(AndrularMvpContext andrularContext) {
+    public void resume(AndrularMvpContext<PostListModel, PostListActivity> andrularContext) {
         this.andrularContext = andrularContext;
         PostListModel model = andrularContext.getModel();
         if (model.getItems() == null && model.getErrorText() == null && !observableHolder.isRunning()) {
@@ -93,5 +94,9 @@ public class PostListPresenter {
 
     public void destroy() {
         observableHolder.destroy();
+    }
+
+    @Override public PostListModel createDefaultModel() {
+        return new PostListModel();
     }
 }

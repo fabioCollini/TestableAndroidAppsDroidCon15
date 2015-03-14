@@ -28,13 +28,12 @@ public class PostListTest {
 
     @Captor ArgumentCaptor<ShareModel> captor;
 
-    private AndrularMvpTestContext andrularTestContext;
+    private AndrularMvpTestContext<PostListModel, PostListActivity> andrularTestContext;
 
     @Before
     public void setUp() throws Exception {
         PostListPresenter postListPresenter = new PostListPresenter(wordPressService, Schedulers.immediate(), Schedulers.immediate());
-        PostListModel model = new PostListModel();
-        andrularTestContext = new AndrularMvpTestContext(view, postListPresenter);
+        andrularTestContext = new AndrularMvpTestContext<>(view, postListPresenter);
     }
 
     @Test

@@ -20,10 +20,18 @@ public class AndrularMvpTestContext<M, V> extends AndrularMvpContext<M, V> {
     }
 
     public String getText(int viewId) {
-        return getContext().getText(viewId);
+        return getContext().getTextValue(viewId);
+    }
+
+    public void writeText(int viewId, String text) {
+        getContext().writeText(viewId, text);
     }
 
     public void clickOnItem(int listId, int position) {
         getContext().clickOnItem(listId, position);
+    }
+
+    public void click(int viewId) {
+        getContext().click(viewId);
     }
 }

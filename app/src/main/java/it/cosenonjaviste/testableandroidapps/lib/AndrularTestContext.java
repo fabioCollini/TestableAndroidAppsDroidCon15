@@ -10,19 +10,21 @@ public class AndrularTestContext extends BaseContext {
 
     private Map<Integer, Integer> listSizes;
     private Map<Integer, Object> viewValues = new HashMap<>();
-    private Map<Integer, ValueReference> listSizesValueReferences;
+    private Map<Integer, ValueReference> listSizesValueReferences = new HashMap<>();
     private Map<Integer, AdapterView.OnItemClickListener> onItemClickListenerMap = new HashMap<>();
+    private Map<Integer, View.OnClickListener> onClickListenerMap = new HashMap<>();
 
     public AndrularTestContext(Object... objs) {
         init(objs);
     }
 
-    @Override protected void updateModel() {
-
+    @Override protected String getTextValue(Integer viewId) {
+        Object obj = viewValues.get(viewId);
+        return obj == null ? "" : obj.toString();
     }
 
     @Override protected void bindOnClickListener(View.OnClickListener onClickListener, int viewId) {
-
+        onClickListenerMap.put(viewId, onClickListener);
     }
 
     @Override protected void bindOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener, Integer listId) {
@@ -30,7 +32,6 @@ public class AndrularTestContext extends BaseContext {
     }
 
     @Override protected void bindList(int viewId, int layoutId, ValueReference itemsCountValueReference) {
-        listSizesValueReferences = new HashMap<>();
         listSizesValueReferences.put(viewId, itemsCountValueReference);
     }
 
@@ -45,25 +46,17 @@ public class AndrularTestContext extends BaseContext {
     }
 
     @Override protected void updateView(int viewId, Object value, BindField bindField) {
-        viewValues.put(viewId, value);
+        if (bindField == BindField.TEXT) {
+            viewValues.put(viewId, value);
+        }
     }
 
-    public void writeText(int editTextId, String text) {
-        settersMap.get(editTextId).set(text);
+    public void writeText(int viewId, String text) {
+        viewValues.put(viewId, text);
     }
 
     public void click(int buttonId) {
-        throw new RuntimeException();
-//        try {
-//            onClickMap.get(buttonId).invoke();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-    }
-
-    public String getText(int textId) {
-        Object obj = viewValues.get(textId);
-        return obj == null ? "" : obj.toString();
+        onClickListenerMap.get(buttonId).onClick(null);
     }
 
     public int getListSize(int listId) {

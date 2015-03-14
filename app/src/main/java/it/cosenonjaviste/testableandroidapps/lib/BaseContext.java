@@ -11,15 +11,15 @@ import java.util.Map;
 import static android.view.View.OnClickListener;
 
 public abstract class BaseContext {
-    protected Map<Integer, ValueReference> gettersMap = new HashMap<>();
-    protected Map<Integer, ValueReference> settersMap = new HashMap<>();
-    protected Map<Integer, ValueReference> itemMethodsMap = new HashMap<>();
+    protected ValueReferenceMap gettersMap = new ValueReferenceMap();
+    protected ValueReferenceMap settersMap = new ValueReferenceMap();
+    protected ValueReferenceMap itemMethodsMap = new ValueReferenceMap();
     protected Map<Integer, ValueReference> onClickMap = new HashMap<>();
     protected Map<Integer, ValueReference> onItemClickMap = new HashMap<>();
 
     public void init(Object... objs) {
         for (Object obj : objs) {
-            HashMap<Integer, ValueReference> bindedFields = ReflectionUtils.getBindedFields(obj);
+            ValueReferenceMap bindedFields = ReflectionUtils.getBindedFields(obj);
 
             gettersMap.putAll(bindedFields);
             gettersMap.putAll(ReflectionUtils.getBindedGetters(obj));
@@ -60,7 +60,14 @@ public abstract class BaseContext {
 
     protected abstract void bindOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener, Integer listId);
 
-    protected abstract void updateModel();
+    public void updateModel() {
+        settersMap.doOnEach((viewId, valueReference) -> {
+            if (valueReference.getBindField() == BindField.TEXT) {
+                String text = getTextValue(viewId);
+                valueReference.set(text);
+            }
+        });
+    }
 
     protected abstract void bindOnClickListener(OnClickListener onClickListener, int viewId);
 
@@ -78,13 +85,14 @@ public abstract class BaseContext {
     protected abstract void bindList(int viewId, int layoutId, ValueReference itemsCountValueReference);
 
     public void updateView() {
-        for (Map.Entry<Integer, ValueReference> entry : gettersMap.entrySet()) {
-            ValueReference valueReference = entry.getValue();
+        gettersMap.doOnEach((viewId, valueReference) -> {
             Object value = valueReference.get();
             System.out.println(value + "-->" + valueReference);
-            updateView(entry.getKey(), value, valueReference.getBindField());
-        }
+            updateView(viewId, value, valueReference.getBindField());
+        });
     }
 
     protected abstract void updateView(int viewId, Object value, BindField bindField);
+
+    protected abstract String getTextValue(Integer viewId);
 }

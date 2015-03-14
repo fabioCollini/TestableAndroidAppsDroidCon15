@@ -7,15 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Map;
-
 public class AndrularRecyclerViewAdapter extends RecyclerView.Adapter<AndrularViewHolder> {
     private Activity activity;
-    private Map<Integer, ValueReference> itemMethodsMap;
+    private ValueReferenceMap itemMethodsMap;
     private final int layoutId;
     private final ValueReference itemCountValueReference;
 
-    public AndrularRecyclerViewAdapter(Activity activity, Map<Integer, ValueReference> itemMethodsMap, ValueReference itemCountValueReference, int layoutId) {
+    public AndrularRecyclerViewAdapter(Activity activity, ValueReferenceMap itemMethodsMap, ValueReference itemCountValueReference, int layoutId) {
         this.activity = activity;
         this.itemMethodsMap = itemMethodsMap;
         this.layoutId = layoutId;
@@ -28,11 +26,11 @@ public class AndrularRecyclerViewAdapter extends RecyclerView.Adapter<AndrularVi
     }
 
     @Override public void onBindViewHolder(AndrularViewHolder andrularViewHolder, int i) {
-        for (Map.Entry<Integer, ValueReference> entry : itemMethodsMap.entrySet()) {
-            TextView view = (TextView) andrularViewHolder.itemView.findViewById(entry.getKey());
-            Object value = entry.getValue().get(i);
+        itemMethodsMap.doOnEach((viewId, valueReference) -> {
+            TextView view = (TextView) andrularViewHolder.itemView.findViewById(viewId);
+            Object value = valueReference.get(i);
             view.setText(value.toString());
-        }
+        });
     }
 
     @Override public int getItemCount() {

@@ -33,9 +33,9 @@ public class ReflectionUtils {
         return onClickMap;
     }
 
-    public static HashMap<Integer, ValueReference> getBindedFields(Object obj) {
+    public static ValueReferenceMap getBindedFields(Object obj) {
         List<Field> annotatedFields = getAnnotatedFields(obj.getClass(), Bind.class);
-        HashMap<Integer, ValueReference> fieldsMap = new HashMap<>();
+        ValueReferenceMap fieldsMap = new ValueReferenceMap();
         for (Field field : annotatedFields) {
             Bind annotation = field.getAnnotation(Bind.class);
             fieldsMap.put(annotation.value(), new ValueReference(field, obj, annotation.field()));
@@ -69,8 +69,8 @@ public class ReflectionUtils {
         return fieldsList;
     }
 
-    public static Map<Integer, ValueReference> getBindedItemMethods(Object obj) {
-        Map<Integer, ValueReference> map = new HashMap<>();
+    public static ValueReferenceMap getBindedItemMethods(Object obj) {
+        ValueReferenceMap map = new ValueReferenceMap();
         List<Method> annotatedMethods = getAnnotatedMethods(obj.getClass(), BindItem.class);
         for (Method annotatedMethod : annotatedMethods) {
             BindItem annotation = annotatedMethod.getAnnotation(BindItem.class);
@@ -79,8 +79,8 @@ public class ReflectionUtils {
         return map;
     }
 
-    public static Map<Integer, ValueReference> getBindedGetters(Object obj) {
-        Map<Integer, ValueReference> map = new HashMap<>();
+    public static ValueReferenceMap getBindedGetters(Object obj) {
+        ValueReferenceMap map = new ValueReferenceMap();
         List<Method> annotatedMethods = getAnnotatedMethods(obj.getClass(), Bind.class);
         for (Method annotatedMethod : annotatedMethods) {
             if (!annotatedMethod.getReturnType().equals(Void.class)) {
@@ -91,8 +91,8 @@ public class ReflectionUtils {
         return map;
     }
 
-    public static Map<Integer, ValueReference> getBindedSetters(Object obj) {
-        Map<Integer, ValueReference> map = new HashMap<>();
+    public static ValueReferenceMap getBindedSetters(Object obj) {
+        ValueReferenceMap map = new ValueReferenceMap();
         List<Method> annotatedMethods = getAnnotatedMethods(obj.getClass(), Bind.class);
         for (Method annotatedMethod : annotatedMethods) {
             if (annotatedMethod.getReturnType().equals(Void.class)) {

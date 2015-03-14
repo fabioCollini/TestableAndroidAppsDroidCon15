@@ -13,6 +13,7 @@ public interface ApplicationComponent {
 
     ShareExecutor getShareExecutor();
 
-
     PostListPresenter createPostListPresenter();
+
+    SharePresenter createSharePresenter();
 }

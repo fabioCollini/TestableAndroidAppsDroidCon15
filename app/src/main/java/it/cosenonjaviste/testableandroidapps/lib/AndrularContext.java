@@ -9,8 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.Map;
-
 public class AndrularContext extends BaseContext {
     private final Activity activity;
 
@@ -76,10 +74,7 @@ public class AndrularContext extends BaseContext {
         }
     }
 
-    public void updateModel() {
-        for (Map.Entry<Integer, ValueReference> entry : settersMap.entrySet()) {
-            CharSequence text = ((TextView) activity.findViewById(entry.getKey())).getText();
-            entry.getValue().set(text.toString());
-        }
+    @Override protected String getTextValue(Integer viewId) {
+        return ((TextView) activity.findViewById(viewId)).getText().toString();
     }
 }

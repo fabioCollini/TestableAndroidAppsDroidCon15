@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.Map;
-
 public class AndrularBaseAdapter extends BaseAdapter {
     private Activity activity;
     private final ValueReference itemCountValueReference;
-    private Map<Integer, ValueReference> itemMethodsMap;
+    private ValueReferenceMap itemMethodsMap;
     private final int layoutId;
 
-    public AndrularBaseAdapter(Activity activity, ValueReference itemCountValueReference, Map<Integer, ValueReference> itemMethodsMap, int layoutId) {
+    public AndrularBaseAdapter(Activity activity, ValueReference itemCountValueReference, ValueReferenceMap itemMethodsMap, int layoutId) {
         this.activity = activity;
         this.itemCountValueReference = itemCountValueReference;
         this.itemMethodsMap = itemMethodsMap;
@@ -37,16 +35,19 @@ public class AndrularBaseAdapter extends BaseAdapter {
     }
 
     @Override public View getView(int position, View convertView, ViewGroup parent) {
+        View itemView;
         if (convertView == null) {
-            convertView = LayoutInflater.from(activity).inflate(layoutId, parent, false);
+            itemView = LayoutInflater.from(activity).inflate(layoutId, parent, false);
+        } else {
+            itemView = convertView;
         }
 
-        for (Map.Entry<Integer, ValueReference> entry : itemMethodsMap.entrySet()) {
-            TextView view = (TextView) convertView.findViewById(entry.getKey());
-            Object value = entry.getValue().get(position);
-            System.out.println(value + "-->" + entry.getValue());
+        itemMethodsMap.doOnEach((viewId, valueReference) -> {
+            TextView view = (TextView) itemView.findViewById(viewId);
+            Object value = valueReference.get(position);
+            System.out.println(value + "-->" + valueReference);
             view.setText(value.toString());
-        }
+        });
 
         return convertView;
     }

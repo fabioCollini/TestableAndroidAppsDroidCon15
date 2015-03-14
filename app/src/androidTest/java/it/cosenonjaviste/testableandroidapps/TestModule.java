@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v5;
+package it.cosenonjaviste.testableandroidapps;
 
 import org.mockito.Mockito;
 
@@ -6,9 +6,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import it.cosenonjaviste.testableandroidapps.ShareExecutor;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
-import it.cosenonjaviste.testableandroidapps.v6.*;
+import it.cosenonjaviste.testableandroidapps.utils.EspressoExecutor;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -22,7 +21,7 @@ public class TestModule {
         return Mockito.mock(WordPressService.class);
     }
 
-    @Provides PostListPresenter providesPresenter(WordPressService wordPressService) {
-        return new PostListPresenter(wordPressService, Schedulers.io(), AndroidSchedulers.mainThread());
+    @Provides @Singleton SchedulerManager providesSchedulerManager() {
+        return new SchedulerManager(Schedulers.from(EspressoExecutor.getCachedThreadPool()), AndroidSchedulers.mainThread());
     }
 }

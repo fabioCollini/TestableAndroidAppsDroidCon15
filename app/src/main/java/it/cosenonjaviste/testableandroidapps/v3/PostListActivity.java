@@ -15,9 +15,11 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.ObservableHolder;
 import it.cosenonjaviste.testableandroidapps.PostAdapter;
 import it.cosenonjaviste.testableandroidapps.R;
+import it.cosenonjaviste.testableandroidapps.SchedulerManager;
 import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 import it.cosenonjaviste.testableandroidapps.model.Author;
 import it.cosenonjaviste.testableandroidapps.model.Post;
@@ -25,8 +27,6 @@ import it.cosenonjaviste.testableandroidapps.model.PostResponse;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 import rx.Observable;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class PostListActivity extends ActionBarActivity {
@@ -46,6 +46,8 @@ public class PostListActivity extends ActionBarActivity {
     private PostAdapter adapter;
 
     @Inject WordPressService wordPressService;
+
+    @Inject SchedulerManager schedulerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +101,7 @@ public class PostListActivity extends ActionBarActivity {
         return wordPressService
                 .listPosts()
                 .map(PostResponse::getPosts)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .compose(schedulerManager.schedule());
     }
 
     private void restoreUi(Bundle savedInstanceState) {

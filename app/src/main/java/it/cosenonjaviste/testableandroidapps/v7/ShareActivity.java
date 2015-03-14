@@ -14,6 +14,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
+import it.cosenonjaviste.testableandroidapps.ApplicationComponent;
+import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 import rx.functions.Actions;

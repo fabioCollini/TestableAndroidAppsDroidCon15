@@ -12,6 +12,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
+import it.cosenonjaviste.testableandroidapps.ApplicationComponent;
+import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 import rx.functions.Actions;
@@ -50,7 +52,7 @@ public class ShareActivity extends ActionBarActivity {
         RetainedFragment<SharePresenter> retainedFragment = RetainedFragment.getOrCreate(this, "retained");
         presenter = retainedFragment.get();
         if (presenter == null) {
-            presenter = component.getSharePresenter();
+            presenter = component.getSharePresenterV6();
             retainedFragment.init(presenter, Actions.empty());
         }
 

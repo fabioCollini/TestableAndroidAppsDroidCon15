@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v7;
+package it.cosenonjaviste.testableandroidapps;
 
 import android.app.Application;
 

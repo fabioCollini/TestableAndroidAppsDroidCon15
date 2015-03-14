@@ -11,7 +11,7 @@ public class AndrularTestContext extends BaseContext {
     private Map<Integer, ValueReference> listSizesValueReferences;
 
     public AndrularTestContext(Object... objs) {
-        super(objs);
+        init(objs);
     }
 
     @Override protected void updateModel() {

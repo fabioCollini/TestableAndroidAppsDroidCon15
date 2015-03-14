@@ -13,7 +13,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 import it.cosenonjaviste.testableandroidapps.PostAdapter;
 import it.cosenonjaviste.testableandroidapps.R;
-import it.cosenonjaviste.testableandroidapps.RetainedObservableFragment;
+import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 
 
 public class PostListActivity extends ActionBarActivity {
@@ -43,7 +43,7 @@ public class PostListActivity extends ActionBarActivity {
         adapter = new PostAdapter(getLayoutInflater());
         listView.setAdapter(adapter);
 
-        RetainedObservableFragment<PostListPresenter> retainedFragment = RetainedObservableFragment.getOrCreate(this, "retained");
+        RetainedFragment<PostListPresenter> retainedFragment = RetainedFragment.getOrCreate(this, "retained");
         presenter = retainedFragment.get();
         if (presenter == null) {
             presenter = component.getPostListPresenter();

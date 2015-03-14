@@ -15,7 +15,7 @@ public abstract class BaseContext {
     protected Map<Integer, ValueReference> itemMethodsMap = new HashMap<>();
     protected Map<Integer, ValueReference> onClickMap = new HashMap<>();
 
-    public BaseContext(Object... objs) {
+    public void init(Object... objs) {
         for (Object obj : objs) {
             HashMap<Integer, ValueReference> bindedFields = ReflectionUtils.getBindedFields(obj);
 

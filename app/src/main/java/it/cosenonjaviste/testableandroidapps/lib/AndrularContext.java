@@ -18,8 +18,8 @@ public class AndrularContext extends BaseContext {
     private BaseAdapter listAdapter;
 
     public AndrularContext(Activity activity, final Object... objs) {
-        super(objs);
         this.activity = activity;
+        init(objs);
     }
 
     protected void bindList(int viewId, int layoutId, ValueReference itemsCountValueReference) {

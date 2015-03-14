@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.testableandroidapps.R;
-import it.cosenonjaviste.testableandroidapps.lib.AndrularTestContext;
+import it.cosenonjaviste.testableandroidapps.lib.AndrularMvpTestContext;
 import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
@@ -28,16 +28,13 @@ public class PostListTest {
 
     @Captor ArgumentCaptor<ShareModel> captor;
 
-    private PostListPresenter postListPresenter;
-
-    private AndrularTestContext andrularTestContext;
+    private AndrularMvpTestContext andrularTestContext;
 
     @Before
     public void setUp() throws Exception {
-        postListPresenter = new PostListPresenter(wordPressService, Schedulers.immediate(), Schedulers.immediate());
+        PostListPresenter postListPresenter = new PostListPresenter(wordPressService, Schedulers.immediate(), Schedulers.immediate());
         PostListModel model = new PostListModel();
-        andrularTestContext = new AndrularTestContext(model, postListPresenter);
-        postListPresenter.setModel(model);
+        andrularTestContext = new AndrularMvpTestContext(view, postListPresenter);
     }
 
     @Test
@@ -45,7 +42,7 @@ public class PostListTest {
         when(wordPressService.listPosts())
                 .thenReturn(Observable.just(new PostResponse(new Post(), new Post(), new Post())));
 
-        postListPresenter.resume(view, andrularTestContext);
+        andrularTestContext.resume();
 
         assertEquals(3, andrularTestContext.getListSize(R.id.list));
     }

@@ -19,7 +19,7 @@ import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.ObservableHolder;
 import it.cosenonjaviste.testableandroidapps.PostAdapter;
 import it.cosenonjaviste.testableandroidapps.R;
-import it.cosenonjaviste.testableandroidapps.RetainedObservableFragment;
+import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 import it.cosenonjaviste.testableandroidapps.SchedulerManager;
 import it.cosenonjaviste.testableandroidapps.model.Author;
 import it.cosenonjaviste.testableandroidapps.model.Post;
@@ -39,7 +39,7 @@ public class PostListActivity extends ActionBarActivity {
 
     @InjectView(R.id.error_layout) View errorLayout;
 
-    private RetainedObservableFragment<ObservableHolder<List<Post>>> retainedFragment;
+    private RetainedFragment<ObservableHolder<List<Post>>> retainedFragment;
 
     private Subscription subscription;
 
@@ -63,7 +63,7 @@ public class PostListActivity extends ActionBarActivity {
 
         listView.setOnItemClickListener((parent, view, position, id) -> startShareActivity(position));
 
-        retainedFragment = RetainedObservableFragment.getOrCreate(this, "retained");
+        retainedFragment = RetainedFragment.getOrCreate(this, "retained");
         if (retainedFragment.get() == null) {
             retainedFragment.init(new ObservableHolder<>(), ObservableHolder::destroy);
         }

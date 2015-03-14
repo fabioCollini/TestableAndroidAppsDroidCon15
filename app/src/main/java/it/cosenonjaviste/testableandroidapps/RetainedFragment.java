@@ -6,12 +6,12 @@ import android.support.v4.app.FragmentManager;
 
 import rx.functions.Action1;
 
-public class RetainedObservableFragment<T> extends Fragment {
+public class RetainedFragment<T> extends Fragment {
 
     private T object;
     private Action1<T> onDestroy;
 
-    public RetainedObservableFragment() {
+    public RetainedFragment() {
         setRetainInstance(true);
     }
 
@@ -31,11 +31,11 @@ public class RetainedObservableFragment<T> extends Fragment {
         }
     }
 
-    public static <T> RetainedObservableFragment<T> getOrCreate(FragmentActivity activity, String tag) {
+    public static <T> RetainedFragment<T> getOrCreate(FragmentActivity activity, String tag) {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        RetainedObservableFragment<T> fragment = (RetainedObservableFragment<T>) fragmentManager.findFragmentByTag(tag);
+        RetainedFragment<T> fragment = (RetainedFragment<T>) fragmentManager.findFragmentByTag(tag);
         if (fragment == null) {
-            fragment = new RetainedObservableFragment<>();
+            fragment = new RetainedFragment<>();
             fragmentManager.beginTransaction().add(fragment, tag).commit();
         }
         return fragment;

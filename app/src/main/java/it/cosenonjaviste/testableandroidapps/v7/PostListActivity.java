@@ -17,7 +17,7 @@ import it.cosenonjaviste.testableandroidapps.ApplicationComponent;
 import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.PostAdapter;
 import it.cosenonjaviste.testableandroidapps.R;
-import it.cosenonjaviste.testableandroidapps.RetainedObservableFragment;
+import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 
 
 public class PostListActivity extends ActionBarActivity {
@@ -38,7 +38,7 @@ public class PostListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RetainedObservableFragment<PostListComponent> retainedFragment = RetainedObservableFragment.getOrCreate(this, "retained");
+        RetainedFragment<PostListComponent> retainedFragment = RetainedFragment.getOrCreate(this, "retained");
         PostListComponent component = retainedFragment.get();
 
         if (component == null) {

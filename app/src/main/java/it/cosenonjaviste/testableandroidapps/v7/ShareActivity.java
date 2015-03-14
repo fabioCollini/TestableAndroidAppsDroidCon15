@@ -17,7 +17,7 @@ import butterknife.OnFocusChange;
 import it.cosenonjaviste.testableandroidapps.ApplicationComponent;
 import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.R;
-import it.cosenonjaviste.testableandroidapps.RetainedObservableFragment;
+import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 import rx.functions.Actions;
 
 
@@ -45,7 +45,7 @@ public class ShareActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RetainedObservableFragment<ShareComponent> retainedFragment = RetainedObservableFragment.getOrCreate(this, "retained");
+        RetainedFragment<ShareComponent> retainedFragment = RetainedFragment.getOrCreate(this, "retained");
         ShareComponent component = retainedFragment.get();
 
         if (component == null) {

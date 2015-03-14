@@ -74,6 +74,14 @@ public class ValueReference {
         }
     }
 
+    public void invoke(int position) {
+        try {
+            method.invoke(dest, position);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public BindField getBindField() {
         return bindField;
     }

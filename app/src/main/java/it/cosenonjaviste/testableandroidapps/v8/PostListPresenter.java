@@ -9,6 +9,7 @@ import it.cosenonjaviste.testableandroidapps.lib.AndrularMvpContext;
 import it.cosenonjaviste.testableandroidapps.lib.Bind;
 import it.cosenonjaviste.testableandroidapps.lib.BindField;
 import it.cosenonjaviste.testableandroidapps.lib.OnClick;
+import it.cosenonjaviste.testableandroidapps.lib.OnItemClick;
 import it.cosenonjaviste.testableandroidapps.lib.Presenter;
 import it.cosenonjaviste.testableandroidapps.model.Author;
 import it.cosenonjaviste.testableandroidapps.model.Post;
@@ -75,6 +76,7 @@ public class PostListPresenter implements Presenter<PostListModel, PostListActiv
                 .observeOn(mainThreadscheduler);
     }
 
+    @OnItemClick(R.id.list)
     public void onItemClick(int position) {
         Post post = andrularContext.getModel().getItems().get(position);
         Author author = post.getAuthor();

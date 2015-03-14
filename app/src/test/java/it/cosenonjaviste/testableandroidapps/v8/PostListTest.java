@@ -67,7 +67,7 @@ public class PostListTest {
 
         andrularTestContext.resume();
 
-        andrularTestContext.clickOnItem(1);
+        andrularTestContext.clickOnItem(R.id.list, 1);
 
         verify(view).startShareActivity(captor.capture());
         assertEquals("title 2", captor.getValue().getTitle());

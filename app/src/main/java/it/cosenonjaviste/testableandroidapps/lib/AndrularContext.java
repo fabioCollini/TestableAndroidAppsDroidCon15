@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +34,11 @@ public class AndrularContext extends BaseContext {
 
     protected void bindOnClickListener(View.OnClickListener onClickListener, int viewId) {
         activity.findViewById(viewId).setOnClickListener(onClickListener);
+    }
+
+    @Override protected void bindOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener, Integer viewId) {
+        ListView list = (ListView) activity.findViewById(viewId);
+        list.setOnItemClickListener(onItemClickListener);
     }
 
     private void bindListView(ListView listView, ValueReference itemCountValueReference, final int layoutId) {

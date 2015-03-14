@@ -21,6 +21,18 @@ public class ReflectionUtils {
         return onClickMap;
     }
 
+    public static Map<Integer, ValueReference> getOnItemClickMethods(Object obj) {
+        Map<Integer, ValueReference> onClickMap = new HashMap<>();
+        Method[] methods = obj.getClass().getMethods();
+        for (Method method : methods) {
+            OnItemClick annotation = method.getAnnotation(OnItemClick.class);
+            if (annotation != null) {
+                onClickMap.put(annotation.value(), new ValueReference(method, obj, null));
+            }
+        }
+        return onClickMap;
+    }
+
     public static HashMap<Integer, ValueReference> getBindedFields(Object obj) {
         List<Field> annotatedFields = getAnnotatedFields(obj.getClass(), Bind.class);
         HashMap<Integer, ValueReference> fieldsMap = new HashMap<>();

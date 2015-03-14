@@ -1,6 +1,7 @@
 package it.cosenonjaviste.testableandroidapps.lib;
 
 import android.view.View;
+import android.widget.AdapterView;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public abstract class BaseContext {
     protected Map<Integer, ValueReference> settersMap = new HashMap<>();
     protected Map<Integer, ValueReference> itemMethodsMap = new HashMap<>();
     protected Map<Integer, ValueReference> onClickMap = new HashMap<>();
+    protected Map<Integer, ValueReference> onItemClickMap = new HashMap<>();
 
     public void init(Object... objs) {
         for (Object obj : objs) {
@@ -27,9 +29,20 @@ public abstract class BaseContext {
 
             itemMethodsMap.putAll(ReflectionUtils.getBindedItemMethods(obj));
             onClickMap.putAll(ReflectionUtils.getOnClickMethods(obj));
+            onItemClickMap.putAll(ReflectionUtils.getOnItemClickMethods(obj));
         }
         for (Object obj : objs) {
             initLists(obj);
+        }
+        for (final Map.Entry<Integer, ValueReference> entry : onItemClickMap.entrySet()) {
+            AdapterView.OnItemClickListener onClickListener = new AdapterView.OnItemClickListener() {
+                @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    updateModel();
+                    entry.getValue().invoke(position);
+                    updateView();
+                }
+            };
+            bindOnItemClickListener(onClickListener, entry.getKey());
         }
         for (final Map.Entry<Integer, ValueReference> entry : onClickMap.entrySet()) {
             OnClickListener onClickListener = new OnClickListener() {
@@ -44,6 +57,8 @@ public abstract class BaseContext {
 
         updateView();
     }
+
+    protected abstract void bindOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener, Integer listId);
 
     protected abstract void updateModel();
 

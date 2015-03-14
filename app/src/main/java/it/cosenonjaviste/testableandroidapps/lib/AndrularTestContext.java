@@ -1,6 +1,7 @@
 package it.cosenonjaviste.testableandroidapps.lib;
 
 import android.view.View;
+import android.widget.AdapterView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ public class AndrularTestContext extends BaseContext {
     private Map<Integer, Integer> listSizes;
     private Map<Integer, Object> viewValues = new HashMap<>();
     private Map<Integer, ValueReference> listSizesValueReferences;
+    private Map<Integer, AdapterView.OnItemClickListener> onItemClickListenerMap = new HashMap<>();
 
     public AndrularTestContext(Object... objs) {
         init(objs);
@@ -21,6 +23,10 @@ public class AndrularTestContext extends BaseContext {
 
     @Override protected void bindOnClickListener(View.OnClickListener onClickListener, int viewId) {
 
+    }
+
+    @Override protected void bindOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener, Integer listId) {
+        onItemClickListenerMap.put(listId, onItemClickListener);
     }
 
     @Override protected void bindList(int viewId, int layoutId, ValueReference itemsCountValueReference) {
@@ -47,11 +53,12 @@ public class AndrularTestContext extends BaseContext {
     }
 
     public void click(int buttonId) {
-        try {
-            onClickMap.get(buttonId).invoke();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        throw new RuntimeException();
+//        try {
+//            onClickMap.get(buttonId).invoke();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public String getText(int textId) {
@@ -64,6 +71,6 @@ public class AndrularTestContext extends BaseContext {
     }
 
     public void clickOnItem(int listId, int position) {
-
+        onItemClickListenerMap.get(listId).onItemClick(null, null, position, 0);
     }
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 public class AndrularTestContext extends BaseContext {
 
     private Map<Integer, Integer> listSizes;
+    private Map<Integer, Object> viewValues = new HashMap<>();
     private Map<Integer, ValueReference> listSizesValueReferences;
 
     public AndrularTestContext(Object... objs) {
@@ -38,7 +39,7 @@ public class AndrularTestContext extends BaseContext {
     }
 
     @Override protected void updateView(int viewId, Object value, BindField bindField) {
-//        listSizes.put(viewId, value);
+        viewValues.put(viewId, value);
     }
 
     public void writeText(int editTextId, String text) {
@@ -54,10 +55,15 @@ public class AndrularTestContext extends BaseContext {
     }
 
     public String getText(int textId) {
-        return gettersMap.get(textId).get();
+        Object obj = viewValues.get(textId);
+        return obj == null ? "" : obj.toString();
     }
 
     public int getListSize(int listId) {
         return listSizes.get(listId);
+    }
+
+    public void clickOnItem(int listId, int position) {
+
     }
 }

@@ -4,11 +4,7 @@ import it.cosenonjaviste.testableandroidapps.RetainedFragment;
 
 public class AndrularMvpTestContext<M, V> extends AndrularMvpContext<M, V> {
     public AndrularMvpTestContext(V view, Presenter<M, V> presenter) {
-        super(view, null, RetainedFragment.create(new MvpFactory<Presenter<M, V>>() {
-            @Override public Presenter<M, V> createPresenter() {
-                return presenter;
-            }
-        }));
+        super(view, null, RetainedFragment.create(presenter));
     }
 
     @Override protected BaseContext createAndrularContext(Object view, Object model, Presenter presenter) {
@@ -21,5 +17,13 @@ public class AndrularMvpTestContext<M, V> extends AndrularMvpContext<M, V> {
 
     private AndrularTestContext getContext() {
         return (AndrularTestContext) context;
+    }
+
+    public String getText(int viewId) {
+        return getContext().getText(viewId);
+    }
+
+    public void clickOnItem(int listId, int position) {
+        getContext().clickOnItem(listId, position);
     }
 }

@@ -22,14 +22,10 @@ public class PostListActivity extends ActionBarActivity {
                 savedInstanceState != null ? savedInstanceState : getIntent().getExtras(),
                 RetainedFragment.getOrCreate(getSupportFragmentManager(), "retained", () -> {
                     ApplicationComponent appComponent = ((CnjApplication) getApplicationContext()).getComponent();
-                    return Dagger_PostListComponent.builder().applicationComponent(appComponent).build();
+                    return appComponent.createPostListPresenter();
                 })
         );
     }
-
-//    @OnItemClick(R.id.list) void onItemClick(int position) {
-//        presenter.onItemClick(position);
-//    }
 
     public void startShareActivity(ShareModel model) {
         ShareActivity.createAndStart(this, model);

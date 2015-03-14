@@ -12,4 +12,7 @@ public interface ApplicationComponent {
     WordPressService getWordPressService();
 
     ShareExecutor getShareExecutor();
+
+
+    PostListPresenter createPostListPresenter();
 }

@@ -32,6 +32,7 @@ public class PostListModel {
         this.errorText = errorText;
     }
 
+    @Bind(R.id.error_text)
     public String getErrorText() {
         return errorText;
     }

@@ -19,8 +19,8 @@ public class AndrularMvpContext<M, V> {
 
     private Presenter<M, V> presenter;
 
-    public AndrularMvpContext(V view, Bundle state, RetainedFragment<MvpFactory<Presenter<M, V>>> retainedFragment) {
-        this.presenter = retainedFragment.get().createPresenter();
+    public AndrularMvpContext(V view, Bundle state, RetainedFragment<Presenter<M, V>> retainedFragment) {
+        this.presenter = retainedFragment.get();
 
         if (state != null) {
             model = Parcels.unwrap(state.getParcelable(MODEL));
@@ -28,7 +28,7 @@ public class AndrularMvpContext<M, V> {
             model = presenter.createDefaultModel();
         }
 
-        retainedFragment.setOnDestroy(c -> destroy());
+        retainedFragment.setOnDestroy(c -> presenter.destroy());
 
         this.view = view;
         context = createAndrularContext(view, model, presenter);
@@ -48,10 +48,6 @@ public class AndrularMvpContext<M, V> {
 
     public void saveState(Bundle outState) {
         outState.putParcelable(MODEL, Parcels.wrap(model));
-    }
-
-    public void destroy() {
-        presenter.destroy();
     }
 
     public void updateView() {

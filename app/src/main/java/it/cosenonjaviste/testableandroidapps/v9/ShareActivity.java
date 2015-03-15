@@ -35,7 +35,6 @@ public class ShareActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_detail);
-        ButterKnife.inject(this);
 
         RetainedFragment<Presenter<ShareModel, ShareActivity>> retainedFragment = RetainedFragment.getOrCreate(this, "retained", () -> {
             ApplicationComponent component = ((CnjApplication) getApplicationContext()).getComponent();

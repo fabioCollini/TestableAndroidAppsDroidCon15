@@ -56,12 +56,12 @@ public interface ApplicationComponent {
     it.cosenonjaviste.testableandroidapps.v8.SharePresenter getSharePresenterV8();
 
 
-    void inject(it.cosenonjaviste.testableandroidapps.v9.PostListActivity postListActivity);
-
     it.cosenonjaviste.testableandroidapps.v9.PostListPresenter getPostListPresenterV9();
-
-    void inject(it.cosenonjaviste.testableandroidapps.v9.ShareActivity shareActivity);
 
     it.cosenonjaviste.testableandroidapps.v9.SharePresenter getSharePresenterV9();
 
+
+    it.cosenonjaviste.testableandroidapps.v10.PostListPresenter getPostListPresenterV10();
+
+    it.cosenonjaviste.testableandroidapps.v10.SharePresenter getSharePresenterV10();
 }

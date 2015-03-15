@@ -1,5 +1,6 @@
 package it.cosenonjaviste.testableandroidapps.mvplib;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import org.parceler.Parcels;
@@ -31,6 +32,10 @@ public class MvpContext<M, V> {
     }
 
     protected MvpContext() {
+    }
+
+    public static void populateIntent(Intent intent, Object model) {
+        intent.putExtra(MODEL, Parcels.wrap(model));
     }
 
     public M getModel() {

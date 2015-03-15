@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v8;
+package it.cosenonjaviste.testableandroidapps.v9;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,8 +8,8 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.SchedulerManager;
@@ -17,7 +17,7 @@ import it.cosenonjaviste.testableandroidapps.model.Author;
 import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
-import it.cosenonjaviste.testableandroidapps.mvplib.TestInjector;
+import it.cosenonjaviste.testableandroidapps.mvplib.MvpTestContext;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -34,16 +34,16 @@ public class PostListPresenterTest {
 
     @Captor ArgumentCaptor<ShareModel> captor;
 
-    private PostListPresenter postListPresenter;
+    @Captor ArgumentCaptor<List<Post>> itemsCaptor;
 
-    private TestInjector injector = new TestInjector();
+    private MvpTestContext<PostListModel, PostListActivity> testContext;
 
     @Before
     public void setUp() throws Exception {
         SchedulerManager schedulerManager = new SchedulerManager(Schedulers.immediate(), Schedulers.immediate());
-        postListPresenter = new PostListPresenter(wordPressService, schedulerManager);
+        PostListPresenter postListPresenter = new PostListPresenter(wordPressService, schedulerManager);
 
-        injector.inject(postListPresenter);
+        testContext = new MvpTestContext<>(view, postListPresenter);
     }
 
     @Test
@@ -51,11 +51,10 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts())
                 .thenReturn(Observable.just(new PostResponse(new Post(), new Post(), new Post())));
 
-        PostListModel model = new PostListModel();
-        postListPresenter.setModel(model);
-        postListPresenter.resume(view);
+        testContext.resume();
 
-        assertEquals(3, model.getItems().size());
+        verify(view).updateItems(itemsCaptor.capture());
+        assertEquals(3, itemsCaptor.getValue().size());
     }
 
     @Test
@@ -63,21 +62,17 @@ public class PostListPresenterTest {
         when(wordPressService.listPosts())
                 .thenReturn(Observable.error(new RuntimeException("abc")));
 
-        PostListModel model = new PostListModel();
-        postListPresenter.setModel(model);
-        postListPresenter.resume(view);
+        testContext.resume();
 
-        assertEquals("abc", model.getErrorText());
+        assertEquals("abc", testContext.getTextView(R.id.error_text).getText());
     }
 
     @Test
     public void clickOnItem() {
-        PostListModel model = new PostListModel();
-        model.setItems(Arrays.asList(createPost(1), createPost(2), createPost(3)));
-        postListPresenter.setModel(model);
-        postListPresenter.resume(view);
+        testContext.setModel(new PostListModel(createPost(1), createPost(2), createPost(3)));
 
-        injector.clickOnItem(R.id.list, 1);
+        testContext.resume();
+        testContext.clickOnItem(R.id.list, 1);
 
         verify(view).startShareActivity(captor.capture());
         assertEquals("title 2", captor.getValue().getTitle());

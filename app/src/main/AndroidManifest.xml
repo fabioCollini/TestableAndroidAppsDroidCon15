@@ -82,6 +82,26 @@
         <activity android:name=".v6.ShareActivity"/>
 
         <activity android:name=".v7.PostListActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name=".v7.ShareActivity"/>
+
+        <activity android:name=".v8.PostListActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name=".v8.ShareActivity"/>
+
+        <activity android:name=".v9.PostListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -89,7 +109,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".v7.ShareActivity"/>
+        <activity android:name=".v9.ShareActivity"/>
 
     </application>
 

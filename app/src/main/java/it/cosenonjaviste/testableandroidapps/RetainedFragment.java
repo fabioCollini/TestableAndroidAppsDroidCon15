@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import rx.functions.Action1;
+import rx.functions.Func0;
 
 public class RetainedFragment<T> extends Fragment {
 
@@ -39,5 +40,20 @@ public class RetainedFragment<T> extends Fragment {
             fragmentManager.beginTransaction().add(fragment, tag).commit();
         }
         return fragment;
+    }
+
+    public static <T> RetainedFragment<T> getOrCreate(FragmentActivity activity, String tag, Func0<T> factory) {
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        RetainedFragment<T> fragment = (RetainedFragment<T>) fragmentManager.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new RetainedFragment<>();
+            fragmentManager.beginTransaction().add(fragment, tag).commit();
+            fragment.object = factory.call();
+        }
+        return fragment;
+    }
+
+    public void setOnDestroy(Action1<T> onDestroy) {
+        this.onDestroy = onDestroy;
     }
 }

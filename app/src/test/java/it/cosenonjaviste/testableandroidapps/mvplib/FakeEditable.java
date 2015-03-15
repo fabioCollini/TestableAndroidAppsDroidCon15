@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.injector;
+package it.cosenonjaviste.testableandroidapps.mvplib;
 
 import android.text.Editable;
 import android.text.InputFilter;

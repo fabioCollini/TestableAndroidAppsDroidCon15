@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.injector;
+package it.cosenonjaviste.testableandroidapps.mvplib;
 
 import android.content.Context;
 import android.text.Editable;

@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v8;
+package it.cosenonjaviste.testableandroidapps.v9;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.ShareExecutor;
-import it.cosenonjaviste.testableandroidapps.mvplib.TestInjector;
+import it.cosenonjaviste.testableandroidapps.mvplib.MvpTestContext;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -29,34 +29,34 @@ public class SharePresenterTest {
 
     @InjectMocks SharePresenter sharePresenter;
 
-    private TestInjector injector = new TestInjector();
+    private MvpTestContext<ShareModel, ShareActivity> testContext;
 
     @Before
     public void setUp() {
         when(view.getString(anyInt())).thenReturn("abc");
 
-        injector.inject(sharePresenter);
-        ShareModel model = new ShareModel();
-        sharePresenter.init(view, model);
+        testContext = new MvpTestContext<>(view, sharePresenter);
+
+        testContext.resume();
     }
 
     @Test
     public void testValidationOk() {
-        injector.getTextView(R.id.share_title).setText("title");
-        injector.getTextView(R.id.share_body).setText("body");
+        testContext.getTextView(R.id.share_title).setText("title");
+        testContext.getTextView(R.id.share_body).setText("body");
 
-        injector.clickOnView(R.id.share_button);
+        testContext.clickOnView(R.id.share_button);
 
         verify(shareExecutor).startSendActivity(eq("title"), eq("body"));
     }
 
     @Test
     public void testValidationError() {
-        injector.getTextView(R.id.share_body).setText("body");
-        injector.clickOnView(R.id.share_button);
+        testContext.getTextView(R.id.share_body).setText("body");
+        testContext.clickOnView(R.id.share_button);
 
-        assertNotNull(injector.getTextView(R.id.share_title).getError());
-        assertNull(injector.getTextView(R.id.share_body).getError());
+        assertNotNull(testContext.getTextView(R.id.share_title).getError());
+        assertNull(testContext.getTextView(R.id.share_body).getError());
 
         verify(shareExecutor, never()).startSendActivity(anyString(), anyString());
     }

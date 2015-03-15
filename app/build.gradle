@@ -50,6 +50,9 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'LICENSE.txt'
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -84,4 +87,26 @@ dependencies {
     testCompile 'org.assertj:assertj-core:1.7.0'
     testCompile 'com.google.dagger:dagger-compiler:2.0-SNAPSHOT'
     testCompile 'org.javassist:javassist:3.19.0-GA'
+}
+
+def coverageSourceDirs = [
+        'src/main/java',
+        'src/gen'
+]
+
+task jacocoUnitTestReport(type: JacocoReport) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+    classDirectories = fileTree(
+            dir: './build/intermediates/classes/debug',
+            excludes: ['**/R*.class',
+                       '**/BuildConfig.class',
+                       '**/*$*.class'
+            ])
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('build/jacoco/testDebug.exec')
 }

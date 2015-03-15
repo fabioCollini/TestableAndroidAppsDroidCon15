@@ -9,10 +9,6 @@ public class PostResponse {
     public PostResponse() {
     }
 
-    public PostResponse(List<Post> posts) {
-        this.posts = posts;
-    }
-
     public PostResponse(Post... posts) {
         this.posts = Arrays.asList(posts);
     }

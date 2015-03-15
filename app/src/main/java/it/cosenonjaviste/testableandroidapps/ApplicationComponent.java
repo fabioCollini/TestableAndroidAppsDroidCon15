@@ -45,4 +45,13 @@ public interface ApplicationComponent {
     ShareExecutor getShareExecutor();
 
     SchedulerManager getSchedulerManager();
+
+
+    void inject(it.cosenonjaviste.testableandroidapps.v8.PostListActivity postListActivity);
+
+    it.cosenonjaviste.testableandroidapps.v8.PostListPresenter getPostListPresenterV8();
+
+    void inject(it.cosenonjaviste.testableandroidapps.v8.ShareActivity shareActivity);
+
+    it.cosenonjaviste.testableandroidapps.v8.SharePresenter getSharePresenterV8();
 }

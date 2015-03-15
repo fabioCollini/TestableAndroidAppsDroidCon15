@@ -83,4 +83,5 @@ dependencies {
     testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'org.assertj:assertj-core:1.7.0'
     testCompile 'com.google.dagger:dagger-compiler:2.0-SNAPSHOT'
+    testCompile 'org.javassist:javassist:3.19.0-GA'
 }

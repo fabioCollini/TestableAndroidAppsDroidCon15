@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v2;
+package it.cosenonjaviste.testableandroidapps.v1;
 
 import com.google.gson.GsonBuilder;
 
@@ -10,19 +10,11 @@ import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-public class PostsBatch {
-
-    private WordPressService wordPressService;
-
-    private EmailSender emailSender;
-
-    public PostsBatch(WordPressService wordPressService, EmailSender emailSender) {
-        this.wordPressService = wordPressService;
-        this.emailSender = emailSender;
-    }
+public class PostBatch {
 
     public void execute() {
-        PostResponse postResponse = wordPressService.listPosts();
+        PostResponse postResponse = createService().listPosts();
+        EmailSender emailSender = new EmailSender();
 
         List<Post> posts = postResponse.getPosts();
         for (Post post : posts) {
@@ -31,14 +23,11 @@ public class PostsBatch {
     }
 
     private static WordPressService createService() {
+        //...
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://www.cosenonjaviste.it/")
                 .setConverter(new GsonConverter(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()))
                 .build();
         return restAdapter.create(WordPressService.class);
-    }
-
-    public static void main(String[] args) {
-        new PostsBatch(createService(), new EmailSender()).execute();
     }
 }

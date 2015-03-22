@@ -2,12 +2,13 @@ package it.cosenonjaviste.testableandroidapps.v1;
 
 import org.junit.Test;
 
-public class PostsBatchTest {
+public class PostBatchTest {
 
-    private PostsBatch postsBatch = new PostsBatch();
+    private PostBatch postBatch = new PostBatch();
 
     @Test
     public void testExecute() {
-        postsBatch.execute();
+        postBatch.execute();
+        //???
     }
 }

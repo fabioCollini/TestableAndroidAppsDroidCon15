@@ -16,21 +16,21 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PostsBatchTest {
+public class PostBatchTest {
 
-    @Mock WordPressService wordPressService;
+    @Mock WordPressService service;
 
-    @Mock EmailSender emailSender;
+    @Mock EmailSender sender;
 
-    @InjectMocks PostsBatch postsBatch;
+    @InjectMocks PostBatch postBatch;
 
     @Test
     public void testExecute() {
-        when(wordPressService.listPosts())
+        when(service.listPosts())
                 .thenReturn(new PostResponse(new Post(), new Post(), new Post()));
 
-        postsBatch.execute();
+        postBatch.execute();
 
-        verify(emailSender, times(3)).sendEmail(any(Post.class));
+        verify(sender, times(3)).sendEmail(any(Post.class));
     }
 }

@@ -4,13 +4,13 @@ import it.cosenonjaviste.testableandroidapps.model.Post;
 
 public class EmailSenderSpy extends EmailSender {
 
-    private int emailSent;
+    private int emailCount;
 
     @Override public void sendEmail(Post p) {
-        emailSent++;
+        emailCount++;
     }
 
-    public int getEmailSent() {
-        return emailSent;
+    public int getEmailCount() {
+        return emailCount;
     }
 }

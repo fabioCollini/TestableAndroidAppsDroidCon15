@@ -3,9 +3,11 @@ package it.cosenonjaviste.testableandroidapps.v5;
 import java.util.Random;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import it.cosenonjaviste.testableandroidapps.model.Post;
 
+@Singleton
 public class EmailSender {
 
     @Inject public EmailSender() {

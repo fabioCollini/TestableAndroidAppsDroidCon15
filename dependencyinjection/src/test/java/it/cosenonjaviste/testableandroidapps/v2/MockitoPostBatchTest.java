@@ -1,9 +1,8 @@
-package it.cosenonjaviste.testableandroidapps.v4;
+package it.cosenonjaviste.testableandroidapps.v2;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.inject.Inject;
+import org.mockito.Mockito;
 
 import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
@@ -14,24 +13,26 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class PostsBatchTest {
+public class MockitoPostBatchTest {
 
-    @Inject WordPressService wordPressService;
+    private WordPressService service;
 
-    @Inject EmailSender emailSender;
+    private EmailSender emailSender;
 
-    @Inject PostsBatch postsBatch;
+    private PostBatch postBatch;
 
     @Before public void init() {
-        Dagger_TestComponent.create().inject(this);
+        emailSender = Mockito.mock(EmailSender.class);
+        service = Mockito.mock(WordPressService.class);
+        postBatch = new PostBatch(service, emailSender);
     }
 
     @Test
     public void testExecute() {
-        when(wordPressService.listPosts())
+        when(service.listPosts())
                 .thenReturn(new PostResponse(new Post(), new Post(), new Post()));
 
-        postsBatch.execute();
+        postBatch.execute();
 
         verify(emailSender, times(3)).sendEmail(any(Post.class));
     }

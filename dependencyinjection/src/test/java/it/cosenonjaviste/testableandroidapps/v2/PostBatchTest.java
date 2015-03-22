@@ -8,23 +8,23 @@ import it.cosenonjaviste.testableandroidapps.model.PostResponse;
 
 import static org.junit.Assert.assertEquals;
 
-public class PostsBatchTest {
+public class PostBatchTest {
 
-    private PostsBatch postsBatch;
+    private PostBatch postBatch;
 
     private EmailSenderSpy emailSenderSpy;
 
+    private WordPressServiceStub serviceStub;
+
     @Before public void init() {
         emailSenderSpy = new EmailSenderSpy();
-        postsBatch = new PostsBatch(
-                new WordPressServiceStub(new PostResponse(new Post(), new Post(), new Post())),
-                emailSenderSpy
-        );
+        serviceStub = new WordPressServiceStub(new PostResponse(new Post(), new Post(), new Post()));
+        postBatch = new PostBatch(serviceStub, emailSenderSpy);
     }
 
     @Test
     public void testExecute() {
-        postsBatch.execute();
-        assertEquals(3, emailSenderSpy.getEmailSent());
+        postBatch.execute();
+        assertEquals(3, emailSenderSpy.getEmailCount());
     }
 }

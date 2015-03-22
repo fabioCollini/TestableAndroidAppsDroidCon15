@@ -1,10 +1,12 @@
-package it.cosenonjaviste.testableandroidapps.v2;
+package it.cosenonjaviste.testableandroidapps.v5;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.concurrent.Executor;
 
 import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
@@ -16,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MockitoPostsBatchTest2 {
+public class PostBatchNoDaggerTest {
 
     @Mock WordPressService service;
 
@@ -24,8 +26,13 @@ public class MockitoPostsBatchTest2 {
 
     private PostBatch postBatch;
 
-    @Before public void init() {
-        postBatch = new PostBatch(service, sender);
+    @Before
+    public void setUp() {
+        postBatch = new PostBatch(service, sender, new Executor() {
+            @Override public void execute(Runnable command) {
+                command.run();
+            }
+        });
     }
 
     @Test

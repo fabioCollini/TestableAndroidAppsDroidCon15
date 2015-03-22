@@ -1,4 +1,4 @@
-package it.cosenonjaviste.testableandroidapps.v4;
+package it.cosenonjaviste.testableandroidapps.v3;
 
 import java.util.List;
 
@@ -8,13 +8,15 @@ import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
 
-public class PostsBatch {
+public class PostBatch {
 
-    @Inject WordPressService wordPressService;
+    private WordPressService wordPressService;
 
-    @Inject EmailSender emailSender;
+    private EmailSender emailSender;
 
-    @Inject public PostsBatch() {
+    @Inject public PostBatch(WordPressService wordPressService, EmailSender emailSender) {
+        this.wordPressService = wordPressService;
+        this.emailSender = emailSender;
     }
 
     public void execute() {
@@ -24,10 +26,5 @@ public class PostsBatch {
         for (Post post : posts) {
             emailSender.sendEmail(post);
         }
-    }
-
-    public static void main(String[] args) {
-        PostsBatch batch = Dagger_MainComponent.create().getBatch();
-        batch.execute();
     }
 }

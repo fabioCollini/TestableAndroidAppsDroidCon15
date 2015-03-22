@@ -57,4 +57,8 @@ public class MvpContext<M, V> {
     public void pause() {
         presenter.pause();
     }
+
+    public Presenter<M, V> getPresenter() {
+        return presenter;
+    }
 }

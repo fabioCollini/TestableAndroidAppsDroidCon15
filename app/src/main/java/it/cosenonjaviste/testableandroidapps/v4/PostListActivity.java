@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.ObservableHolder;
 import it.cosenonjaviste.testableandroidapps.PostAdapter;
@@ -63,8 +64,6 @@ public class PostListActivity extends ActionBarActivity {
         adapter = new PostAdapter(getLayoutInflater());
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener((parent, view, position, id) -> startShareActivity(position));
-
         retainedFragment = RetainedFragment.getOrCreate(this, "retained");
         if (retainedFragment.get() == null) {
             retainedFragment.init(new ObservableHolder<>(), ObservableHolder::destroy);
@@ -83,7 +82,7 @@ public class PostListActivity extends ActionBarActivity {
         }
     }
 
-    private void startShareActivity(int position) {
+    @OnItemClick(R.id.list) void startShareActivity(int position) {
         Post post = adapter.getItem(position);
         Author author = post.getAuthor();
         String excerpt = post.getExcerpt();

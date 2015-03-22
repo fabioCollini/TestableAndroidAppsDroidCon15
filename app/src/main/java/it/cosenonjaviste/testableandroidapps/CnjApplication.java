@@ -4,7 +4,7 @@ import android.app.Application;
 
 public class CnjApplication extends Application {
 
-    public static ApplicationComponent component;
+    private ApplicationComponent component;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -15,5 +15,9 @@ public class CnjApplication extends Application {
 
     public ApplicationComponent getComponent() {
         return component;
+    }
+
+    public void setComponent(ApplicationComponent component) {
+        this.component = component;
     }
 }

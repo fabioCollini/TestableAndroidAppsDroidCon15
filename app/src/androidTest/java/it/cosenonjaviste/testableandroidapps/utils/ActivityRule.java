@@ -17,6 +17,7 @@ package it.cosenonjaviste.testableandroidapps.utils;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 
@@ -36,7 +37,7 @@ import org.junit.runners.model.Statement;
  * public final ActivityRule<ExampleActivity> example =
  *     new ActivityRule<>(ExampleActivity.class);
  * }</pre>
- *
+ * <p>
  * This will automatically launch the activity for each test method. The instance will also be
  * created sooner should you need to use it in a {@link Before @Before} method.
  * <p>
@@ -60,9 +61,15 @@ public class ActivityRule<T extends Activity> implements TestRule {
 
     private T activity;
     private Instrumentation instrumentation;
+    private boolean launchActivityBeforeTest;
 
     public ActivityRule(Class<T> activityClass) {
+        this(activityClass, true);
+    }
+
+    public ActivityRule(Class<T> activityClass, boolean launchActivityBeforeTest) {
         this.activityClass = activityClass;
+        this.launchActivityBeforeTest = launchActivityBeforeTest;
     }
 
     protected Intent getLaunchIntent(String targetPackage, Class<T> activityClass) {
@@ -81,7 +88,9 @@ public class ActivityRule<T extends Activity> implements TestRule {
         return activity;
     }
 
-    /** Get the {@link Instrumentation} instance for this test. */
+    /**
+     * Get the {@link Instrumentation} instance for this test.
+     */
     public final Instrumentation instrumentation() {
         launchActivity();
         return instrumentation;
@@ -90,7 +99,9 @@ public class ActivityRule<T extends Activity> implements TestRule {
     @Override public final Statement apply(final Statement base, Description description) {
         return new Statement() {
             @Override public void evaluate() throws Throwable {
-                launchActivity();
+                if (launchActivityBeforeTest) {
+                    launchActivity();
+                }
 
                 base.evaluate();
 
@@ -108,8 +119,12 @@ public class ActivityRule<T extends Activity> implements TestRule {
                 : (instrumentation = InstrumentationRegistry.getInstrumentation());
     }
 
+    public Context getApplication() {
+        return fetchInstrumentation().getTargetContext().getApplicationContext();
+    }
+
     @SuppressWarnings("unchecked") // Guarded by generics at the constructor.
-    private void launchActivity() {
+    public void launchActivity() {
         if (activity != null) return;
 
         Instrumentation instrumentation = fetchInstrumentation();

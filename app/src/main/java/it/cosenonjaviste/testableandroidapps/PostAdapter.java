@@ -1,12 +1,9 @@
 package it.cosenonjaviste.testableandroidapps;
 
-import android.text.Html;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +43,17 @@ public class PostAdapter extends BaseAdapter {
     }
 
     @Override public View getView(int position, View convertView, ViewGroup parent) {
+        PostViewHolder viewHolder;
         if (convertView == null) {
             convertView = inflater.inflate(android.R.layout.simple_list_item_2, parent, false);
+            viewHolder = new PostViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (PostViewHolder) convertView.getTag();
         }
         Post post = getItem(position);
 
-        CharSequence dateFormatted = DateUtils.getRelativeTimeSpanString(convertView.getContext(), post.getDate().getTime());
-
-        TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
-        TextView text2 = (TextView) convertView.findViewById(android.R.id.text2);
-
-        text1.setText(Html.fromHtml(post.getTitle()));
-        text2.setText(dateFormatted + ", " + post.getAuthor().getFirstName() + " " + post.getAuthor().getLastName());
+        viewHolder.populate(post);
 
         return convertView;
     }

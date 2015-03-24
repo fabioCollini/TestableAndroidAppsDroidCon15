@@ -5,13 +5,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.inject.Inject;
 
 import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.R;
-import it.cosenonjaviste.testableandroidapps.model.Author;
 import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
@@ -25,6 +23,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static it.cosenonjaviste.testableandroidapps.PostCreator.createPost;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -61,10 +60,5 @@ public class PostListActivityTest {
         rule.launchActivity();
 
         onView(withId(R.id.error_layout)).check(matches(isDisplayed()));
-    }
-
-
-    private static Post createPost(int id) {
-        return new Post(id, new Author(id, "name " + id, "last name " + id), "title " + id, new Date(), "url" + id, "excerpt " + id);
     }
 }

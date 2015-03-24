@@ -36,7 +36,6 @@
 
         <activity android:name=".v2.ShareActivity"/>
         <activity android:name=".v2.TestablePostListActivity"/>
-        <activity android:name=".v2.TestablePostListActivityWithError"/>
         <activity android:name=".v2.TestableShareActivity"/>
 
         <activity android:name=".v3.PostListActivity">

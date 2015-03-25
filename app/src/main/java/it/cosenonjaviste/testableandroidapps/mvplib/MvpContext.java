@@ -22,7 +22,8 @@ public class MvpContext<M, V> {
 
         if (state != null) {
             model = Parcels.unwrap(state.getParcelable(MODEL));
-        } else {
+        }
+        if (model == null) {
             model = presenter.createDefaultModel();
         }
 

@@ -32,7 +32,7 @@ public class PostListPresenterTest {
     private PostListPresenter postListPresenter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         SchedulerManager schedulerManager = new SchedulerManager(Schedulers.immediate(), Schedulers.immediate());
         postListPresenter = new PostListPresenter(wordPressService, schedulerManager);
     }

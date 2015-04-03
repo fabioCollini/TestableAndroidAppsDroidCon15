@@ -23,7 +23,7 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton ShareExecutor provideShareExecutor() {
-        return new AndroidShareExecutor(application);
+        return new ShareExecutor(application);
     }
 
     @Provides @Singleton WordPressService providesWordPressService() {

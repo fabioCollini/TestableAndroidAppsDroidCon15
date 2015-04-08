@@ -8,7 +8,7 @@ public class CnjApplication extends Application {
 
     @Override public void onCreate() {
         super.onCreate();
-        component = Dagger_ApplicationComponent.builder()
+        component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }

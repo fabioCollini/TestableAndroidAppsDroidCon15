@@ -50,7 +50,7 @@ public class ShareActivity extends ActionBarActivity {
 
         if (component == null) {
             ApplicationComponent appComponent = ((CnjApplication) getApplicationContext()).getComponent();
-            component = Dagger_ShareComponent.builder().applicationComponent(appComponent).build();
+            component = DaggerShareComponent.builder().applicationComponent(appComponent).build();
             component.inject(this);
             retainedFragment.init(component, Actions.empty());
         } else {

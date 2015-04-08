@@ -36,7 +36,7 @@ public class PostListActivityTest {
 
     @Before
     public void setUp() {
-        TestComponent component = Dagger_TestComponent.create();
+        TestComponent component = DaggerTestComponent.create();
         CnjApplication application = (CnjApplication) rule.getApplication();
         application.setComponent(component);
         component.inject(this);

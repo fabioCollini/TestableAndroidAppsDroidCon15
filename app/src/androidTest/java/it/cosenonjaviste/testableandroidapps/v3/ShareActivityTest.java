@@ -38,7 +38,7 @@ public class ShareActivityTest {
 
     @Before
     public void setUp() {
-        TestComponent component = Dagger_TestComponent.create();
+        TestComponent component = DaggerTestComponent.create();
         ((CnjApplication) rule.getApplication()).setComponent(component);
         component.inject(this);
     }

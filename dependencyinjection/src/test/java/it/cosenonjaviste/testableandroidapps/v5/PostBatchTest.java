@@ -23,7 +23,7 @@ public class PostBatchTest {
     @Inject PostBatch postBatch;
 
     @Before public void init() {
-        Dagger_TestComponent.create().inject(this);
+        DaggerTestComponent.create().inject(this);
     }
 
     @Test

@@ -43,7 +43,7 @@ public class PostListActivity extends ActionBarActivity {
 
         if (component == null) {
             ApplicationComponent appComponent = ((CnjApplication) getApplicationContext()).getComponent();
-            component = Dagger_PostListComponent.builder().applicationComponent(appComponent).build();
+            component = DaggerPostListComponent.builder().applicationComponent(appComponent).build();
             component.inject(this);
             retainedFragment.init(component, c -> presenter.destroy());
         } else {

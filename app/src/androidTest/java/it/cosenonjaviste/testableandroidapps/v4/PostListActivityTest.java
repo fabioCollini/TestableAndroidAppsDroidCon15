@@ -1,5 +1,8 @@
 package it.cosenonjaviste.testableandroidapps.v4;
 
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +16,6 @@ import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.model.Post;
 import it.cosenonjaviste.testableandroidapps.model.PostResponse;
 import it.cosenonjaviste.testableandroidapps.model.WordPressService;
-import it.cosenonjaviste.testableandroidapps.utils.ActivityRule;
 import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -33,12 +35,13 @@ public class PostListActivityTest {
     @Inject WordPressService wordPressService;
 
     @Rule
-    public final ActivityRule<PostListActivity> rule = new ActivityRule<>(PostListActivity.class, false);
+    public final ActivityTestRule<PostListActivity> rule = new ActivityTestRule<>(PostListActivity.class, false, false);
 
     @Before
     public void setUp() {
         TestComponent component = DaggerTestComponent.create();
-        ((CnjApplication) rule.getApplication()).setComponent(component);
+        CnjApplication application = (CnjApplication) InstrumentationRegistry.getTargetContext().getApplicationContext();
+        application.setComponent(component);
         component.inject(this);
     }
 
@@ -46,7 +49,7 @@ public class PostListActivityTest {
         when(wordPressService.listPosts())
                 .thenReturn(Observable.just(new PostResponse(createPost(1), createPost(2), createPost(3))));
 
-        rule.launchActivity();
+        rule.launchActivity(null);
 
         onView(withText("title 1")).check(matches(isDisplayed()));
 
@@ -57,7 +60,7 @@ public class PostListActivityTest {
         when(wordPressService.listPosts())
                 .thenReturn(Observable.error(new IOException("error!")));
 
-        rule.launchActivity();
+        rule.launchActivity(null);
 
         onView(withId(R.id.error_layout)).check(matches(isDisplayed()));
     }

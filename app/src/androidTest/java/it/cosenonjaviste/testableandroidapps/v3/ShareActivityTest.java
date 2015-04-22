@@ -1,7 +1,9 @@
 package it.cosenonjaviste.testableandroidapps.v3;
 
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -12,7 +14,6 @@ import javax.inject.Inject;
 import it.cosenonjaviste.testableandroidapps.CnjApplication;
 import it.cosenonjaviste.testableandroidapps.R;
 import it.cosenonjaviste.testableandroidapps.ShareExecutor;
-import it.cosenonjaviste.testableandroidapps.utils.ActivityRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -28,9 +29,9 @@ public class ShareActivityTest {
     @Inject ShareExecutor shareExecutor;
 
     @Rule
-    public final ActivityRule<ShareActivity> rule = new ActivityRule<ShareActivity>(ShareActivity.class, false) {
-        @Override protected Intent getLaunchIntent(String targetPackage, Class<ShareActivity> activityClass) {
-            Intent intent = super.getLaunchIntent(targetPackage, activityClass);
+    public final ActivityTestRule<ShareActivity> rule = new ActivityTestRule<ShareActivity>(ShareActivity.class, false, false) {
+        @Override protected Intent getActivityIntent() {
+            Intent intent = super.getActivityIntent();
             ShareActivity.populateIntent(intent, "title", "body");
             return intent;
         }
@@ -39,19 +40,20 @@ public class ShareActivityTest {
     @Before
     public void setUp() {
         TestComponent component = DaggerTestComponent.create();
-        ((CnjApplication) rule.getApplication()).setComponent(component);
+        CnjApplication application = (CnjApplication) InstrumentationRegistry.getTargetContext().getApplicationContext();
+        application.setComponent(component);
         component.inject(this);
     }
 
     @Test public void checkParameters() {
-        rule.launchActivity();
+        rule.launchActivity(null);
 
         onView(withId(R.id.share_title)).check(matches(withText("title")));
         onView(withId(R.id.share_body)).check(matches(withText("body")));
     }
 
     @Test public void clickOnShare() {
-        rule.launchActivity();
+        rule.launchActivity(null);
 
         onView(withId(R.id.share_button)).perform(click());
 
@@ -59,14 +61,14 @@ public class ShareActivityTest {
     }
 
     @Test public void checkValidationWhenEmpty() {
-        rule.launchActivity();
+        rule.launchActivity(null);
 
         onView(withId(R.id.share_title)).perform(ViewActions.clearText());
         onView(withId(R.id.share_body)).perform(ViewActions.clearText());
 
         onView(withId(R.id.share_button)).perform(click());
 
-        String errorText = rule.get().getString(R.string.mandatory_field);
+        String errorText = rule.getActivity().getString(R.string.mandatory_field);
 
         onView(withId(R.id.share_title)).check(matches(hasErrorText(errorText)));
         onView(withId(R.id.share_body)).check(matches(hasErrorText(errorText)));

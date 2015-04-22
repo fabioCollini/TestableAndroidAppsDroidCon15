@@ -2,12 +2,12 @@ package it.cosenonjaviste.testableandroidapps.v1;
 
 import android.content.Intent;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Rule;
 import org.junit.Test;
 
 import it.cosenonjaviste.testableandroidapps.R;
-import it.cosenonjaviste.testableandroidapps.utils.ActivityRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -18,9 +18,9 @@ import static it.cosenonjaviste.testableandroidapps.utils.ErrorTextMatcher.hasEr
 
 public class ShareActivityTest {
     @Rule
-    public final ActivityRule<ShareActivity> rule = new ActivityRule<ShareActivity>(ShareActivity.class) {
-        @Override protected Intent getLaunchIntent(String targetPackage, Class<ShareActivity> activityClass) {
-            Intent intent = super.getLaunchIntent(targetPackage, activityClass);
+    public final ActivityTestRule<ShareActivity> rule = new ActivityTestRule<ShareActivity>(ShareActivity.class) {
+        @Override protected Intent getActivityIntent() {
+            Intent intent = super.getActivityIntent();
             ShareActivity.populateIntent(intent, "title", "body");
             return intent;
         }
@@ -41,7 +41,7 @@ public class ShareActivityTest {
 
         onView(withId(R.id.share_button)).perform(click());
 
-        String errorText = rule.get().getString(R.string.mandatory_field);
+        String errorText = rule.getActivity().getString(R.string.mandatory_field);
 
         onView(withId(R.id.share_title)).check(matches(hasErrorText(errorText)));
         onView(withId(R.id.share_body)).check(matches(hasErrorText(errorText)));

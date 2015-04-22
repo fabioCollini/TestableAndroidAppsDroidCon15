@@ -1,5 +1,7 @@
 package it.cosenonjaviste.testableandroidapps.v2;
 
+import android.support.test.rule.ActivityTestRule;
+
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -7,7 +9,6 @@ import java.io.IOException;
 
 import it.cosenonjaviste.testableandroidapps.PostCreator;
 import it.cosenonjaviste.testableandroidapps.R;
-import it.cosenonjaviste.testableandroidapps.utils.ActivityRule;
 import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -17,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class PostListActivityTest {
-    @Rule public final ActivityRule<TestablePostListActivity> rule = new ActivityRule<>(TestablePostListActivity.class, false);
+    @Rule public final ActivityTestRule<TestablePostListActivity> rule = new ActivityTestRule<>(TestablePostListActivity.class, false, false);
 
     @Test public void showListActivity() {
         TestablePostListActivity.result = Observable.just(
@@ -26,7 +27,7 @@ public class PostListActivityTest {
                 PostCreator.createPost(3)
         ).toList();
 
-        rule.launchActivity();
+        rule.launchActivity(null);
 
         onView(withText("title 1")).check(matches(isDisplayed()));
     }
@@ -34,7 +35,7 @@ public class PostListActivityTest {
     @Test public void checkErrorLayoutDisplayed() {
         TestablePostListActivity.result = Observable.error(new IOException());
 
-        rule.launchActivity();
+        rule.launchActivity(null);
 
         onView(withId(R.id.error_layout)).check(matches(isDisplayed()));
     }
